@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap');
+
+:root {
+  /* Background */
+  --void: #000000;
+  --void-gradient: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%);
+
+  /* Accent */
+  --accent: #ffffff;
+  --accent-dim: rgba(255, 255, 255, 0.6);
+  --accent-subtle: rgba(255, 255, 255, 0.1);
+
+  /* Hotspots */
+  --hotspot-core: #ffffff;
+  --hotspot-glow: rgba(255, 255, 255, 0.4);
+  --hotspot-pulse: rgba(255, 255, 255, 0.2);
+
+  /* Panel */
+  --panel-bg: rgba(15, 15, 15, 0.9);
+  --panel-border: rgba(255, 255, 255, 0.1);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.4);
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--void);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--void-gradient);
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Product Header */
+.product-header {
+  position: fixed;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.product-tagline {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Hotspots */
+.hotspot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hotspot-core);
+  border: none;
+  box-shadow:
+    0 0 10px var(--hotspot-glow),
+    0 0 20px var(--hotspot-glow),
+    0 0 40px var(--hotspot-pulse);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  position: relative;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hotspot:hover {
+  transform: scale(1.3);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px var(--hotspot-glow),
+      0 0 20px var(--hotspot-glow),
+      0 0 40px var(--hotspot-pulse);
+  }
+  50% {
+    box-shadow:
+      0 0 15px var(--hotspot-glow),
+      0 0 30px var(--hotspot-glow),
+      0 0 60px var(--hotspot-pulse);
+  }
+}
+
+.hotspot::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid var(--hotspot-glow);
+  animation: ring-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Feature Panel */
+.feature-panel {
+  position: fixed;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 32px;
+  z-index: 100;
+  animation: panel-enter 0.4s ease-out;
+}
+
+.feature-panel.closing {
+  animation: panel-exit 0.3s ease-in forwards;
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes panel-exit {
+  from {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+}
+
+.feature-panel h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-right: 24px;
+}
+
+.feature-panel p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.feature-panel-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-subtle);
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.feature-panel-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+/* Interaction Hint */
+.interaction-hint {
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: hint-fade 5s ease forwards;
+  pointer-events: none;
+}
+
+.interaction-hint svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+}
+
+@keyframes hint-fade {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+/* Loading */
+.loader {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.loader-bar {
+  width: 120px;
+  height: 2px;
+  background: var(--accent-subtle);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.loader-progress {
+  height: 100%;
+  background: var(--accent-dim);
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feature-panel {
+    right: 16px;
+    left: 16px;
+    width: auto;
+    top: auto;
+    bottom: 24px;
+    transform: none;
+    animation: panel-enter-mobile 0.4s ease-out;
+  }
+
+  .feature-panel.closing {
+    animation: panel-exit-mobile 0.3s ease-in forwards;
+  }
+
+  @keyframes panel-enter-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes panel-exit-mobile {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  .product-name {
+    font-size: 24px;
+  }
+
+  .product-header {
+    top: 24px;
+  }
+
+  .interaction-hint {
+    bottom: 24px;
+  }
+}
