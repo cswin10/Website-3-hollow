@@ -1,7 +1,9 @@
 import { Html } from '@react-three/drei';
 import { hotspots } from '../data/hotspots';
 
-export default function Hotspots({ onSelect, selectedId }) {
+export default function Hotspots({ onSelect, onHover, selectedId, visible = true }) {
+  if (!visible) return null;
+
   return (
     <>
       {hotspots.map((hotspot) => (
@@ -19,6 +21,8 @@ export default function Hotspots({ onSelect, selectedId }) {
               e.stopPropagation();
               onSelect(hotspot);
             }}
+            onMouseEnter={() => onHover?.(hotspot)}
+            onMouseLeave={() => onHover?.(null)}
             aria-label={hotspot.title}
           />
         </Html>

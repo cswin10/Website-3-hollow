@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-export default function SoundToggle() {
+export default function SoundToggle({ onToggle }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const audioContextRef = useRef(null);
@@ -11,7 +11,13 @@ export default function SoundToggle() {
   useEffect(() => {
     return () => {
       if (oscillatorRef.current) {
-        oscillatorRef.current.stop();
+        try {
+          oscillatorRef.current.osc1?.stop();
+          oscillatorRef.current.osc2?.stop();
+          oscillatorRef.current.osc3?.stop();
+        } catch {
+          // Already stopped
+        }
       }
       if (audioContextRef.current) {
         audioContextRef.current.close();
@@ -71,15 +77,18 @@ export default function SoundToggle() {
       audioContextRef.current.resume();
     }
 
-    if (gainNodeRef.current) {
-      const targetGain = isPlaying ? 0 : 0.15;
+    const newState = !isPlaying;
+
+    if (gainNodeRef.current && audioContextRef.current) {
+      const targetGain = newState ? 0.15 : 0;
       gainNodeRef.current.gain.linearRampToValueAtTime(
         targetGain,
         audioContextRef.current.currentTime + 0.5
       );
     }
 
-    setIsPlaying(!isPlaying);
+    setIsPlaying(newState);
+    onToggle?.(newState);
   };
 
   return (
