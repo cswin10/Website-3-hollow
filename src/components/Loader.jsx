@@ -6,13 +6,10 @@ export default function Loader() {
   return (
     <Html center>
       <div className="loader">
+        <div className="loader-progress">{Math.round(progress)}%</div>
         <div className="loader-bar">
-          <div
-            className="loader-progress"
-            style={{ width: `${progress}%` }}
-          />
+          <div className="loader-fill" style={{ width: `${progress}%` }} />
         </div>
-        <span>{Math.round(progress)}%</span>
       </div>
     </Html>
   );
