@@ -4,6 +4,7 @@ import Scene from './components/Scene';
 import ProductHeader from './components/ProductHeader';
 import FeaturePanel from './components/FeaturePanel';
 import InteractionHint from './components/InteractionHint';
+import SoundToggle from './components/SoundToggle';
 import Loader from './components/Loader';
 import './styles/global.css';
 
@@ -33,6 +34,10 @@ export default function App() {
   return (
     <div className="app">
       <ProductHeader />
+      <SoundToggle />
+
+      {/* Vignette overlay for depth */}
+      <div className="vignette" />
 
       <div className="canvas-container">
         <Canvas

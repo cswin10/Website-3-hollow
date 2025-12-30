@@ -3,16 +3,29 @@ import { OrbitControls, Environment } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import Model from './Model';
 import Hotspots from './Hotspots';
+import FloatingParticles from './FloatingParticles';
 import useAutoRotate from '../hooks/useAutoRotate';
+
+// Rotating environment wrapper for dynamic lighting
+function RotatingEnvironment() {
+  const envRef = useRef();
+
+  useFrame((state, delta) => {
+    if (envRef.current) {
+      envRef.current.rotation.y += delta * 0.05;
+    }
+  });
+
+  return (
+    <group ref={envRef}>
+      <Environment preset="city" />
+    </group>
+  );
+}
 
 export default function Scene({ onHotspotSelect, selectedHotspot, onBackgroundClick }) {
   const controlsRef = useRef();
   const { pauseRotation } = useAutoRotate(controlsRef, 3000);
-
-  // Handle interaction events for pausing auto-rotate
-  useFrame(() => {
-    // This runs every frame - could add additional logic here
-  });
 
   return (
     <>
@@ -40,6 +53,9 @@ export default function Scene({ onHotspotSelect, selectedHotspot, onBackgroundCl
       {/* Ambient - subtle shadow lift */}
       <ambientLight intensity={0.1} />
 
+      {/* Floating dust particles for atmosphere */}
+      <FloatingParticles count={60} />
+
       {/* Model */}
       <Model />
 
@@ -65,8 +81,8 @@ export default function Scene({ onHotspotSelect, selectedHotspot, onBackgroundCl
         onStart={pauseRotation}
       />
 
-      {/* Environment for reflections */}
-      <Environment preset="city" />
+      {/* Rotating environment for dynamic reflections */}
+      <RotatingEnvironment />
 
       {/* Invisible click catcher for dismissing panels */}
       <mesh
