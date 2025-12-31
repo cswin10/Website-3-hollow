@@ -7,7 +7,6 @@ import InteractionHint from './components/InteractionHint';
 import SoundToggle from './components/SoundToggle';
 import Loader from './components/Loader';
 import IntroAnimation from './components/IntroAnimation';
-import CursorSpotlight from './components/CursorSpotlight';
 import CinematicTour from './components/CinematicTour';
 import TourButton from './components/TourButton';
 import ExplorationProgress from './components/ExplorationProgress';
@@ -115,9 +114,6 @@ export default function App() {
     <div className="app">
       {/* Cinematic intro overlay */}
       <IntroAnimation onComplete={handleIntroComplete} />
-
-      {/* Cursor spotlight effect */}
-      <CursorSpotlight />
 
       {/* Header - visible after intro */}
       <ProductHeader visible={introComplete} />
