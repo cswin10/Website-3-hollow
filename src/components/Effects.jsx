@@ -1,30 +1,18 @@
-import { EffectComposer, Bloom, ChromaticAberration, Vignette, Noise } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
-import { Vector2 } from 'three';
 
-export default function Effects({ intensity = 1 }) {
+export default function Effects() {
   return (
     <EffectComposer>
       <Bloom
-        intensity={0.5 * intensity}
-        luminanceThreshold={0.6}
+        intensity={0.3}
+        luminanceThreshold={0.7}
         luminanceSmoothing={0.9}
-        mipmapBlur
-      />
-      <ChromaticAberration
-        offset={new Vector2(0.0005 * intensity, 0.0005 * intensity)}
-        blendFunction={BlendFunction.NORMAL}
-        radialModulation={true}
-        modulationOffset={0.5}
       />
       <Vignette
         offset={0.3}
-        darkness={0.7 * intensity}
+        darkness={0.5}
         blendFunction={BlendFunction.NORMAL}
-      />
-      <Noise
-        opacity={0.03 * intensity}
-        blendFunction={BlendFunction.OVERLAY}
       />
     </EffectComposer>
   );

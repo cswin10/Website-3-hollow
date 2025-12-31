@@ -6,8 +6,6 @@ import Hotspots from './Hotspots';
 import FloatingParticles from './FloatingParticles';
 import StarField from './StarField';
 import Effects from './Effects';
-import DynamicLighting from './DynamicLighting';
-import CameraController from './CameraController';
 import useAutoRotate from '../hooks/useAutoRotate';
 
 // Rotating environment wrapper for dynamic lighting
@@ -40,14 +38,8 @@ export default function Scene({
 
   return (
     <>
-      {/* Camera controller for intro and focus animations */}
-      <CameraController
-        introComplete={introComplete}
-        focusTarget={selectedHotspot?.position}
-      />
-
-      {/* Post-processing effects */}
-      <Effects intensity={introComplete ? 1 : 0.5} />
+      {/* Post-processing effects - simplified */}
+      <Effects />
 
       {/* Lighting - Cinematic setup */}
       {/* Key light - main illumination from upper right */}
@@ -73,11 +65,8 @@ export default function Scene({
       {/* Ambient - subtle shadow lift */}
       <ambientLight intensity={0.1} />
 
-      {/* Dynamic spotlight for hotspot focus */}
-      <DynamicLighting focusPosition={selectedHotspot?.position} />
-
       {/* Star field background */}
-      <StarField count={300} />
+      <StarField count={150} />
 
       {/* Floating dust particles for atmosphere */}
       <FloatingParticles count={80} />
